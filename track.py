@@ -71,22 +71,22 @@ class main:
 
     def any_model(self,frame):
         src_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        faces = self.face_cascade.detectMultiScale(src_gray)
+        bbox = self.face_cascade.detectMultiScale(src_gray)
         outputs = []
         confs = []
 
         #Change annotation coordinates for StrongSORT
         #From [x_topleft, y_topleft, width, height] to [x_center, y_center, width, height]
-        if faces is not None and len(faces):
-            x = torch.tensor(faces)
+        if bbox is not None and len(bbox):
+            x = torch.tensor(bbox)
             
             xywhs = x.clone() if isinstance(x, torch.Tensor) else np.copy(x)
             xywhs[:, 0] = (x[:, 0] + x[:, 2]/2) # x center
             xywhs[:, 1] = (x[:, 1] + x[:, 3]/2) # y center
             
             #Static confs(accuracy) and clss(class) because opencv face detection is used
-            confs = torch.tensor([0.9 for i in range(len(faces))])
-            clss = torch.tensor([0 for i in range(len(faces))])
+            confs = torch.tensor([0.9 for i in range(len(bbox))])
+            clss = torch.tensor([0 for i in range(len(bbox))])
 
             #Run StorngSORT
             outputs = self.strongsort.update(xywhs.cpu(), confs.cpu(), clss.cpu(), frame)
