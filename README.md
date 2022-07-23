@@ -19,7 +19,7 @@ $ pip3 install -r requirements.txt
 ### 
 
 ## Run
-Enter the video-path and run it.
+Enter the video path and run it.
 ```bash
 $ python3 track.py --source vid.mp4 # video path
 ```
