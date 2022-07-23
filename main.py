@@ -7,11 +7,12 @@ from strong_sort.strong_sort import StrongSORT
 
 class main:
     def __init__(self):
+        #opencv model for face detection
         self.face_cascade_path = 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + self.face_cascade_path)
 
         self.save_vid = True 
-        self.font_style = './fonts-japanese-mincho.ttf'
+        self.font_style = 'fonts-japanese-mincho.ttf'
 
         # initialize StrongSORT
         self.cfg = get_config()
@@ -32,13 +33,13 @@ class main:
         )
         
     def video(self):
-        cap = cv2.VideoCapture("./input.mp4")
+        cap = cv2.VideoCapture("input.mp4")
 
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = cap.get(cv2.CAP_PROP_FPS)
         fmt = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-        writer = cv2.VideoWriter('./result.mp4',
+        writer = cv2.VideoWriter('result.mp4',
                                  fmt, fps, (width, height))
         tframe = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
@@ -55,9 +56,11 @@ class main:
             
             if len(outputs) > 0:
                 for j, (output, conf) in enumerate(zip(outputs, confs)):
-                    if self.save_vid:
                         frame = main.annotation(self, frame, output, conf)
-            writer.write(frame)
+            #save
+            if self.save_vid:
+                writer.write(frame)
+            
         cap.release()
         writer.release()
         cv2.destroyAllWindows()
@@ -68,7 +71,7 @@ class main:
         outputs = []
         confs = []
 
-        #StrongSORT用にアノテーション座標を変更
+        #Change annotation coordinates for StrongSORT
         #From [x_topleft, y_topleft, width, height] to [x_center, y_center, width, height]
         if faces is not None and len(faces):
             x = torch.tensor(faces)
@@ -76,10 +79,12 @@ class main:
             xywhs = x.clone() if isinstance(x, torch.Tensor) else np.copy(x)
             xywhs[:, 0] = (x[:, 0] + x[:, 2]/2) # x center
             xywhs[:, 1] = (x[:, 1] + x[:, 3]/2) # y center
+            
+            #Static confs(accuracy) and clss(class) because opencv face detection is used
             confs = torch.tensor([0.9 for i in range(len(faces))])
             clss = torch.tensor([0 for i in range(len(faces))])
 
-            #StorngSORT
+            #Run StorngSORT
             outputs = self.strongsort.update(xywhs.cpu(), confs.cpu(), clss.cpu(), frame)
             
         return outputs,confs
@@ -87,8 +92,8 @@ class main:
     def annotation(self, frame, output, conf):
         bboxes = output[0:4]
         id = int(output[4])
-        cls = int(output[5])
-        label = None #clsの番号に合わせて変更する
+        clss = int(output[5])
+        label = None #Make the object name change to match the clss number
 
         frame = frame if isinstance(frame, Image.Image) else Image.fromarray(frame)
         draw = ImageDraw.Draw(frame)
@@ -100,12 +105,12 @@ class main:
         textcolor = (255, 255, 255)
         textsize = 40
 
-        #fontのスタイルをパスで指定
+        #Specify font style by path
         font = ImageFont.truetype(self.font_style, textsize)
 
         text = f'{id} {label} {conf:.2f}'
 
-        txpos = (output[0], output[1]-textsize-linewidth//2) #テキストの描画を開始する座標
+        txpos = (output[0], output[1]-textsize-linewidth//2) #Coordinates to start drawing text
         txw, txh = draw.textsize(text, font=font)
 
         draw.rectangle([txpos, (output[0]+txw, output[1])], outline=rectcolor,
