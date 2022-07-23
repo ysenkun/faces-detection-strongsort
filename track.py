@@ -9,7 +9,7 @@ from strong_sort.utils.parser import get_config
 from strong_sort.strong_sort import StrongSORT
 
 class main:
-    def __init__(self):
+    def __init__(self, arg):
         #opencv model for face detection
         self.face_cascade_path = 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + self.face_cascade_path)
