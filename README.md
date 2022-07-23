@@ -8,6 +8,10 @@ In track.py, opencv's face detection is used as a sample for object detection.
 
 ## Seting Up Environment
 
+```bash
+$ git clone https://github.com/ysenkun/any-model-strongsort.git
+```
+
 Download the model for face detection in opencv.
 ```bash
 $ wget -nc https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml -O ./haarcascade_frontalface_default.xml
