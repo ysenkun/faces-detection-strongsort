@@ -1,7 +1,10 @@
+import argparse
 import cv2
 import numpy as np
-import torch
+import os
 from PIL import Image, ImageDraw, ImageFont
+import torch
+import sys
 from strong_sort.utils.parser import get_config
 from strong_sort.strong_sort import StrongSORT
 
@@ -11,8 +14,9 @@ class main:
         self.face_cascade_path = 'haarcascade_frontalface_default.xml'
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + self.face_cascade_path)
 
-        self.save_vid = True 
-        self.font_style = 'fonts-japanese-mincho.ttf'
+        self.save_vid = True
+        self.video_path = arg.source
+        self.font_path = os.path.join(cv2.__path__[0],'qt','fonts','DejaVuSans.ttf')
 
         # initialize StrongSORT
         self.cfg = get_config()
@@ -33,7 +37,7 @@ class main:
         )
         
     def video(self):
-        cap = cv2.VideoCapture("input.mp4")
+        cap = cv2.VideoCapture(self.video_path)
 
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -106,7 +110,7 @@ class main:
         textsize = 40
 
         #Specify font style by path
-        font = ImageFont.truetype(self.font_style, textsize)
+        font = ImageFont.truetype(self.font_path, textsize)
 
         text = f'{id} {label} {conf:.2f}'
 
@@ -120,7 +124,13 @@ class main:
         frame = np.asarray(frame)
 
         return frame
+    
+def parse_arguments(argv):
+    parser = argparse.ArgumentParser() 
+    parser.add_argument('--source', type=str)
+    return parser.parse_args(argv)
 
 if __name__ == '__main__':
-    run = main()
+    arg = parse_arguments(sys.argv[1:])
+    run = main(arg)
     run.video()
