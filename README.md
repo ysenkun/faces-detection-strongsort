@@ -10,7 +10,7 @@ In track.py, opencv's face detection is used as a sample for object detection.
 
 Download the model for face detection in opencv.
 ```bash
-wget -nc https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml -O ./haarcascade_frontalface_default.xml
+$ wget -nc https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml -O ./haarcascade_frontalface_default.xml
 ```
 
 ```bash
