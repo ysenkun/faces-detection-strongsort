@@ -43,7 +43,7 @@ class main:
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         fps = cap.get(cv2.CAP_PROP_FPS)
         fmt = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
-        writer = cv2.VideoWriter('result.mp4',
+        writer = cv2.VideoWriter('output.mp4',
                                  fmt, fps, (width, height))
         tframe = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
