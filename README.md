@@ -1,7 +1,9 @@
 # Track Faces Detection with StrongSORT
 
 This repository can track faces.  
-track.py uses opencv's face detection.
+track.py uses opencv's face detection.  
+
+※Also, [here](https://github.com/ysenkun/hands-detection-strongsort) is a repository for tracking hands
 
 ### :raising_hand: Reference:
 1. https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet
