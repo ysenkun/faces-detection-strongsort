@@ -1,6 +1,6 @@
 # Track Face Detection with StrongSORT
 
-This repository can track faces．
+This repository can track face.  
 track.py uses opencv's face detection.
 
 ### :raising_hand: Reference:
