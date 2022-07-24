@@ -1,7 +1,7 @@
-# Track Any Object Detection Model with StrongSORT
+# Track Face Detection with StrongSORT
 
-This repository can track any object detection model.  
-In track.py, opencv's face detection is used as a sample for object detection.
+This repository can track faces．
+track.py uses opencv's face detection.
 
 ### :raising_hand: Reference:
 1. https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet
