@@ -9,7 +9,7 @@ track.py uses opencv's face detection.
 ## Seting Up Environment
 
 ```bash
-$ git clone https://github.com/ysenkun/any-model-strongsort.git
+$ git clone https://github.com/ysenkun/faces-detection-strongsort.git
 ```
 
 Download the model for face detection in opencv.
