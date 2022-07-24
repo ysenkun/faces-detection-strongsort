@@ -27,5 +27,5 @@ Enter the video path and run it.
 ```bash
 $ python3 track.py --source vid.mp4 # video path
 ```
-
+![face](https://user-images.githubusercontent.com/82140392/180652961-dc979cc1-d38d-427f-baba-3ad5b73d2a79.gif)
 
