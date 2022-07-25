@@ -6,8 +6,8 @@ track.py uses opencv's face detection.
 ※Also, [here](https://github.com/ysenkun/hands-detection-strongsort) is a repository for tracking hands
 
 ### :raising_hand: Reference:
-1. https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet  
-https://github.com/dyhBUPT/StrongSORT
+https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet  
+https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet
 
 ## Seting Up Environment
 
