@@ -7,7 +7,6 @@ track.py uses opencv's face detection.
 
 ### :raising_hand: Reference:
 https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet  
-https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet
 
 ## Seting Up Environment
 
