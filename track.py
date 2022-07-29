@@ -22,7 +22,7 @@ class main:
         self.cfg = get_config()
         self.cfg.merge_from_file('strong_sort/configs/strong_sort.yaml')
         self.strong_sort_weights = 'strong_sort/deep/checkpoint/osnet_x0_25_market1501.pth'
-        self.device = 'cpu'
+        self.device = arg.device
 
         self.strongsort = StrongSORT(
             self.strong_sort_weights,
@@ -126,8 +126,9 @@ class main:
         return frame
     
 def parse_arguments(argv):
-    parser = argparse.ArgumentParser() 
-    parser.add_argument('--source', type=str)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--source', type=str, help='your video path')
+    parser.add_argument('--device', default='cpu', type=str, help='cuda device, i.e. 0 or 0,1,2,3 or cpu')    
     return parser.parse_args(argv)
 
 if __name__ == '__main__':
